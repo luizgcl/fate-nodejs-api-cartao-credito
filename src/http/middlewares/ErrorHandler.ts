@@ -9,15 +9,19 @@ export async function handleError(
   response: Response,
   next: NextFunction
 ) {
-  if (error instanceof ZodError) {
-    return response.status(HttpStatus.BAD_REQUEST).json({
-      data: error.flatten().fieldErrors,
-      code: 'VALIDATION_ERROR',
+  if (error) {
+    if (error instanceof ZodError) {
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        data: error.flatten().fieldErrors,
+        code: 'VALIDATION_ERROR',
+      })
+    }
+
+    return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+      data: error.message,
+      code: 'INTERNAL_SERVER_ERROR',
     })
   }
 
-  return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-    data: error.message,
-    code: 'INTERNAL_SERVER_ERROR',
-  })
+  return next(response)
 }
