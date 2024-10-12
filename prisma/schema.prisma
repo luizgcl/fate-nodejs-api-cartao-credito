@@ -12,3 +12,28 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  cpf      String @id
+  name     String
+  email    String @unique
+  password String
+  cep      String
+
+  cards Card[]
+
+  @@map("users")
+}
+
+model Card {
+  id           String @id @default(uuid())
+  number       String
+  monthExpires Int    @map("month_expires")
+  yearExpires  Int    @map("year_expires")
+  code         String
+  cpf          String
+
+  user User @relation(fields: [cpf], references: [cpf])
+
+  @@map("user_cards")
+}
