@@ -12,7 +12,7 @@ export async function handleError(
   if (error) {
     if (error instanceof ZodError) {
       return response.status(HttpStatus.BAD_REQUEST).json({
-        data: error.flatten().fieldErrors,
+        data: error.format()._errors,
         code: 'VALIDATION_ERROR',
       })
     }
