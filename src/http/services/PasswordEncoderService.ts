@@ -1,4 +1,4 @@
-import { genSalt, hash } from 'bcrypt'
+import { compare, genSalt, hash } from 'bcrypt'
 import z from 'zod'
 
 const passwordSchema = z.string().min(8, {
@@ -15,4 +15,14 @@ export async function handleEncodePassword(input: string) {
   return {
     passwordHash,
   }
+}
+
+export async function handleComparePassword({
+  password,
+  password_hash,
+}: {
+  password: string
+  password_hash: string
+}) {
+  return await compare(password, password_hash)
 }

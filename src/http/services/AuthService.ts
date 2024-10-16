@@ -1,5 +1,11 @@
+import { InvalidCredentialsError } from '@/core/errors/InvalidCredentialsError'
 import { UserAlreadyExistsError } from '@/core/errors/UserAlreadyExistsError'
-import { handleEncodePassword } from './PasswordEncoderService'
+import z from 'zod'
+import {
+  handleComparePassword,
+  handleEncodePassword,
+} from './PasswordEncoderService'
+import { handleCreateToken } from './TokenService'
 import {
   type CreateUserParams,
   createUser,
@@ -7,7 +13,14 @@ import {
   findUserByEmail,
 } from './UserService'
 
-export async function register({
+const userLoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+})
+
+export type UserLoginParams = z.infer<typeof userLoginSchema>
+
+export async function handleRegister({
   email,
   cpf,
   cep,
@@ -35,4 +48,23 @@ export async function register({
     name,
     password: passwordHash,
   })
+}
+
+export async function handleLogin({ email, password }: UserLoginParams) {
+  const { user } = await findUserByEmail(email)
+
+  if (!user) {
+    throw new InvalidCredentialsError()
+  }
+
+  const isValidPassword = await handleComparePassword({
+    password,
+    password_hash: user.password,
+  })
+
+  if (!isValidPassword) {
+    throw new InvalidCredentialsError()
+  }
+
+  return handleCreateToken(user)
 }
