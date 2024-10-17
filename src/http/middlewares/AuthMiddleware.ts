@@ -1,4 +1,4 @@
-import { InvalidCredentialsError } from '@/core/errors/InvalidCredentialsError'
+import { InvalidCredentialsException } from '@/core/errors/InvalidCredentialsException'
 import { Exception } from '@/core/errors/bases/Exception'
 import { env } from '@/env/Env'
 import type { NextFunction, Request, Response } from 'express'
@@ -12,7 +12,7 @@ export async function handleAuthentication(
   const authorization = request.headers.authorization?.substring(7)
 
   if (!authorization) {
-    throw new InvalidCredentialsError()
+    throw new InvalidCredentialsException()
   }
 
   try {
@@ -27,7 +27,7 @@ export async function handleAuthentication(
       )
     }
 
-    throw new InvalidCredentialsError()
+    throw new InvalidCredentialsException()
   }
 
   return next()

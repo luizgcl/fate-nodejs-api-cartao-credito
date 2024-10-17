@@ -1,5 +1,5 @@
-import { InvalidCredentialsError } from '@/core/errors/InvalidCredentialsError'
-import { UserAlreadyExistsError } from '@/core/errors/UserAlreadyExistsError'
+import { InvalidCredentialsException } from '@/core/errors/InvalidCredentialsException'
+import { UserAlreadyExistsException } from '@/core/errors/UserAlreadyExistsException'
 import z from 'zod'
 import {
   handleComparePassword,
@@ -30,13 +30,13 @@ export async function handleRegister({
   const { user: hasUserWithSameEmail } = await findUserByEmail(email)
 
   if (hasUserWithSameEmail) {
-    throw new UserAlreadyExistsError()
+    throw new UserAlreadyExistsException()
   }
 
   const { user: hasUserWithSameCpf } = await findUserByCpf(cpf)
 
   if (hasUserWithSameCpf) {
-    throw new UserAlreadyExistsError()
+    throw new UserAlreadyExistsException()
   }
 
   const { passwordHash } = await handleEncodePassword(password)
@@ -54,7 +54,7 @@ export async function handleLogin({ email, password }: UserLoginParams) {
   const { user } = await findUserByEmail(email)
 
   if (!user) {
-    throw new InvalidCredentialsError()
+    throw new InvalidCredentialsException()
   }
 
   const isValidPassword = await handleComparePassword({
@@ -63,7 +63,7 @@ export async function handleLogin({ email, password }: UserLoginParams) {
   })
 
   if (!isValidPassword) {
-    throw new InvalidCredentialsError()
+    throw new InvalidCredentialsException()
   }
 
   return handleCreateToken(user)

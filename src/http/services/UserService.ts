@@ -1,4 +1,4 @@
-import { CreateUserError } from '@/core/errors/CreateUserError'
+import { CreateUserException } from '@/core/errors/CreateUserException'
 import { prismaClient } from '@/database/prisma'
 import z from 'zod'
 
@@ -17,8 +17,8 @@ export async function createUser(data: CreateUserParams) {
     await prismaClient.user.create({
       data,
     })
-  } catch (error) {
-    throw new CreateUserError()
+  } catch {
+    throw new CreateUserException()
   }
 }
 
