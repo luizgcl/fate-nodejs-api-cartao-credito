@@ -1,5 +1,5 @@
 import { CreateUserError } from '@/core/errors/CreateUserError'
-import { prismaClient } from '@/database/Prisma'
+import { prismaClient } from '@/database/prisma'
 import z from 'zod'
 
 const createUserSchema = z.object({
