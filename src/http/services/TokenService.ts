@@ -4,7 +4,7 @@ import { type JwtPayload, sign, verify } from 'jsonwebtoken'
 
 export function handleCreateToken(user: User) {
   const payload = {
-    userId: user.cpf,
+    userDocument: user.cpf,
   }
 
   const token = sign(payload, env.SECRET, {

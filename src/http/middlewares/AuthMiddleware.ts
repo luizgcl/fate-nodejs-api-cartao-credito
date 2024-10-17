@@ -18,7 +18,7 @@ export async function handleAuthentication(
   try {
     const { payload } = handleValidateToken(authorization)
 
-    request.userId = payload.userId
+    request.userDocument = payload.userDocument
   } catch (error) {
     if (error instanceof Error && env.DEBUG) {
       throw new Exception(
