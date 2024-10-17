@@ -1,4 +1,4 @@
-export class ValidationError extends Error {
+export class Exception extends Error {
   constructor(
     private readonly _code: string,
     message: string

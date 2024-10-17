@@ -1,5 +1,7 @@
-export class UserAlreadyExistsError extends Error {
+import { Exception } from './bases/Exception'
+
+export class UserAlreadyExistsError extends Exception {
   constructor() {
-    super('O usuário já possui um cadastro.')
+    super('USER_ALREADY_EXISTS', 'O usuário já possui um cadastro.')
   }
 }

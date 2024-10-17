@@ -1,5 +1,5 @@
 import { HttpStatus } from '@/core/constants/HttpStatus'
-import { ValidationError } from '@/core/errors/bases/ValidationError'
+import { Exception } from '@/core/errors/bases/Exception'
 import type { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'
 import { ZodError } from 'zod'
@@ -18,7 +18,7 @@ export async function handleError(
       })
     }
 
-    if (error instanceof ValidationError) {
+    if (error instanceof Exception) {
       return response.status(HttpStatus.BAD_REQUEST).json({
         data: {
           message: error.message,

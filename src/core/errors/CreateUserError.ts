@@ -1,5 +1,7 @@
-export class CreateUserError extends Error {
+import { Exception } from './bases/Exception'
+
+export class CreateUserError extends Exception {
   constructor() {
-    super('Ocorreu um erro ao criar usuário')
+    super('CREATE_USER_ERROR', 'Ocorreu um erro ao criar usuário')
   }
 }
