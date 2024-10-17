@@ -2,7 +2,7 @@ import { InvalidCredentialsException } from '@/core/errors/InvalidCredentialsExc
 import { Exception } from '@/core/errors/bases/Exception'
 import { env } from '@/env/Env'
 import type { NextFunction, Request, Response } from 'express'
-import { handleValidateToken } from '../services/TokenService'
+import { handleValidateToken } from '../services/UserTokenService'
 
 export async function handleAuthentication(
   request: Request,

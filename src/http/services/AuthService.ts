@@ -5,13 +5,13 @@ import {
   handleComparePassword,
   handleEncodePassword,
 } from './PasswordEncoderService'
-import { handleCreateToken } from './TokenService'
 import {
   type CreateUserParams,
   createUser,
   findUserByCpf,
   findUserByEmail,
 } from './UserService'
+import { handleCreateToken } from './UserTokenService'
 
 const userLoginSchema = z.object({
   email: z.string().email(),

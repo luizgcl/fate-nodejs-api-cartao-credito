@@ -3,6 +3,8 @@ import cors from 'cors'
 import express from 'express'
 import 'express-async-errors'
 import * as AuthController from './controllers/AuthController'
+import * as CardController from './controllers/CardController'
+import { handleAuthentication } from './middlewares/AuthMiddleware'
 import { handleError } from './middlewares/ErrorHandler'
 
 export function startServer() {
@@ -17,6 +19,7 @@ export function startServer() {
   )
 
   app.use('/auth', AuthController.bootstrap(router))
+  app.use('/cards', handleAuthentication, CardController.bootstrap(router))
 
   app.use(handleError)
 
