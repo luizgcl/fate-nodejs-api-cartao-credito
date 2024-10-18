@@ -12,11 +12,11 @@ export function bootstrap(router: Router) {
   })
 
   router.post('/validate', async (req: Request, res: Response) => {
-    await CardService.validateCard({
+    const token = await CardService.validateCard({
       ...req.body,
       cpf: req.userDocument,
     })
-    return res.end()
+    return res.json(token)
   })
 
   return router
